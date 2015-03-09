@@ -1,0 +1,30 @@
+{
+  "name": "zest-cli",
+  "version": "0.0.1",
+  "description": "zest.js cli",
+  "main": "zest.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/darkowlzz/zest-cli.git"
+  },
+  "keywords": [
+    "zest",
+    "zest-cli",
+    "zest.js",
+    "mozilla",
+    "mozilla zest"
+  ],
+  "author": "Sunny <indiasuny000@gmail.com> (darkowlzz)",
+  "license": "MPL",
+  "dependencies": {
+    "commander": "^2.6.0",
+    "zest-runner": "git://github.com/darkowlzz/zest-runner.git"
+  },
+  "preferGlobal": "true",
+  "bin": {
+    "zest": "zest.js"
+  }
+}

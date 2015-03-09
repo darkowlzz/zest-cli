@@ -3,12 +3,14 @@
 var program    = require('commander'),
     ZestRunner = require('zest-runner');
 
+var tokens = {};
 
 // Set options.
 program
   .version('0.0.1')
   .option('-s, --script [file]', 'run script file', scriptRun)
-  .option('-d, --debug', 'show debug messages');
+  .option('-d, --debug', 'show debug messages')
+  .option('-t, --token <name>=<value>', 'pass argument token');
 
 
 // Custom help messages.
@@ -17,6 +19,7 @@ program.on('--help', function () {
   console.log('');
   console.log('    zest -s foo.zst');
   console.log('    zest -s foo.zst -d');
+  console.log('    zest -s foo.zst -t request.url=http://foo.com -t request.method=GET')
 });
 
 program.parse(process.argv);
@@ -25,6 +28,7 @@ program.parse(process.argv);
 if (!process.argv.slice(2).length) {
   program.outputHelp();
 }
+
 
 /**
  * Run the script with options.
@@ -38,12 +42,19 @@ function scriptRun (path) {
   };
 
   // Check if debug option is passed.
-  if (process.argv.indexOf('-d') > -1) {
+  if ((process.argv.indexOf('-d') > -1) ||
+      (process.argv.indexOf('--debug') > -1)) {
     opts.debug = true;
   }
 
+  extractTokens('-t');
+  extractTokens('--token');
+  opts.tokens = tokens;
+
   var zr = new ZestRunner(opts);
   zr.run().then(function (r) {
+    console.log('got output');
+    console.log(r);
     output(r);
   });
 }
@@ -61,4 +72,25 @@ function output (results) {
       console.log(result.print);
     }
   });
+}
+
+
+/**
+ * Extract argument tokens belonging to the given option.
+ *
+ * @param [String] option - An command line option string, like '-t'.
+ */
+function extractTokens(option) {
+  var pos = 0,
+      token, key, val, temp;
+
+  pos = process.argv.indexOf(option, (pos + 1));
+  while(pos != -1) {
+    token = process.argv[pos + 1];
+    temp = token.split('=');
+    key = temp[0];
+    val = temp[1];
+    tokens[key] = val;
+    pos = process.argv.indexOf(option, (pos + 1));
+  }
 }

@@ -1,6 +1,8 @@
 zest-cli
 ========
 
+[![NPM](https://nodei.co/npm/zest-cli.png)](https://nodei.co/npm/zest-cli/)
+
 A command line interface for zest.
 
 ## To use

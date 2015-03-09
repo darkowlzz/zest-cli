@@ -53,8 +53,6 @@ function scriptRun (path) {
 
   var zr = new ZestRunner(opts);
   zr.run().then(function (r) {
-    console.log('got output');
-    console.log(r);
     output(r);
   });
 }

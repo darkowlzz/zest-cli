@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+'use strict';
 
 var program    = require('commander'),
     ZestRunner = require('zest-runner');
@@ -19,7 +20,7 @@ program.on('--help', function () {
   console.log('');
   console.log('    zest -s foo.zst');
   console.log('    zest -s foo.zst -d');
-  console.log('    zest -s foo.zst -t request.url=http://foo.com -t request.method=GET')
+  console.log('    zest -s foo.zst -t request.url=http://foo.com -t request.method=GET');
 });
 
 program.parse(process.argv);
